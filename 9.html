@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body >
+    用户名:<input type="text" id="username">
+    密码:<input type="password" id="password">
+    重新输入密码:<input type="password" id="passwordtwo">
+    <button id="submit" onclick="submit()">提交</button>
+</body>
+<script>
+   function submit(){
+    var username=document.getElementById("username").value
+    var password=document.getElementById("password").value
+    var passwordtwo=document.getElementById("passwordtwo").value
+    if(username==""||username==null){
+        alert("请输入用户名")
+    }
+   else if(password!=passwordtwo){
+         alert("两次密码输入不一致")
+    }
+    else{
+        alert("注册成功")
+    }
+   }
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <style>
+        .container{
+            width: 1000px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mirror{
+            /*放大镜大小*/
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        .mirror img{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="meet" src="image/xiaogou.jpg" width="100%" />
+        <div class="mirror">
+            <img src="image/xiaogou.jpg" />
+        </div>
+    </div>
+    <input class="daxiao" type="number" min="1" value="1" />
+
+    <script>
+        //获取对象
+        var container = document.querySelector(".container");
+        var mirror = document.querySelector(".mirror");
+        var meet = document.querySelector(".meet");
+        var img = document.querySelector(".mirror img");
+        var daxiao = document.querySelector(".daxiao");
+        
+        //监听加减框的值进行调节放大图片的大小（放大图片宽度 = 原图片宽度 × 倍数）
+        //加减框之前焦点后设置倍数的值才能生效
+        daxiao.addEventListener("mouseout",function(e){
+            var zoom = daxiao.value;
+            img.style.width = meet.width *zoom + "px";
+        })
+        
+        //监听移入图像的事件绑定div
+        container.addEventListener("mousemove",function(e){
+            //获取鼠标的坐标
+            var x = e.clientX;
+            var y = e.clientY;
+            //获取最外层div的左高宽度
+            var left = container.offsetLeft;
+            var top = container.offsetTop;
+            //放大图像的div左高宽度 = 鼠标的值 - 最外层div左高宽度 - 自身放大镜的一半，为的是鼠标在圆心
+            var mirrorLeft = x - left - mirror.offsetWidth / 2;
+            var mirrorTop = y - top - mirror.offsetHeight / 2;
+            //放大图片的样式设置
+            mirror.style.left = mirrorLeft + "px";
+            mirror.style.top = mirrorTop + "px";
+            //计算放大图像左高值（原图鼠标位置和原宽度的比值 = 放大图像的鼠标位置和放大图像宽度的比值），鼠标的位置是一致的
+            var imgLeft = (mirrorLeft + mirror.offsetWidth / 2) / container.offsetWidth * img.offsetWidth - mirror.offsetWidth / 2;
+            var imgTop = (mirrorTop + mirror.offsetHeight / 2) / container.offsetHeight * img.offsetHeight - mirror.offsetHeight / 2;
+            //设置放大图像的样式，放大图像向左移动
+            img.style.left = -imgLeft + "px";
+            img.style.top = -imgTop + "px";
+        })
+    </script>
+</body>
+</html>
